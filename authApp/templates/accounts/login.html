@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type='text/css' href="{% static 'styles/styles.css' %}">
+    <!-- Style for error message to be in red color -->
+    <style>
+        .error{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <h2>Login</h2>
+    <form method="POST" action="{% url 'login' %}?next={{ request.GET.next }}">
+        {% csrf_token %}
+        <!-- hidden input  -->
+         <input type="hidden" name="next" value="{{next}}">
+         <div class="form_group">
+            <label for="username">Username: </label>
+            <input type="text" name="username" id="username" required>
+         </div>
+         <div class="form_group">
+            <label for="password">Password: </label>
+            <input type="text" name="password" id="password" required>
+         </div>
+         <button type="submit">Login</button>
+    </form>
+    <!-- checking for error messages -->
+     {% if error %}
+    <p class="error">{{error}}</p>
+     {% endif %}
+     <p>Don't have an account? <a href="{% url 'register' %}">Register here</a> </p>
+</body> 
+</html>
